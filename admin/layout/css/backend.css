@@ -1,0 +1,121 @@
+/*start main rules*/
+body {
+    background-color: #f4f4f4;
+    font-size: 16px;
+}
+.asterisk{
+    font-size: 30px;
+    position: absolute;
+    right: 30px;
+    top: 8px;
+    color: #D20707;
+}
+/*end main rules*/
+
+/*start login form*/
+.login{
+    width: 300px;
+    margin: 100px auto;
+
+}
+.login h4{
+    color: #888;
+}
+.login input{
+    margin-bottom: 10px;
+}
+.login .form-control {
+    background-color: #EAEAEA;
+}
+.login .btn{
+    background-color: #008dde;
+    width: 100%;
+}
+/*end login form*/
+/*start bootstrap edits*/
+
+/*navbar*/
+.navbar {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+.nav > li > a,
+.navbar-brand {
+    padding: 15px 12px;
+}
+.navbar-brand {
+    font-size: 1em;
+}
+
+.navbar-inverse .navbar-nav > .open>a,
+.navbar-inverse .navbar-nav > .open>a:focus,
+.navbar-inverse .navbar-nav > .open>a:hover {
+    background-color: #3498db !important;
+}
+.form-control{
+    position: relative;
+}
+/*end bootstrap edits*/
+/*start dashboard*/
+.home-stats .stat {
+    background-color: #eee;
+    padding: 20px;
+    font-size: 15px;
+    color: #fff;
+    border-radius: 10px;
+}
+.home-stats .stat a {
+    color: #fff;
+}
+.home-stats .stat a:hover {
+    text-decoration: none;
+}
+.home-stats .stat span {
+    display: block;
+    font-size: 60px;
+}
+.home-stats .st-members {
+    background-color: #3498db;
+}
+.home-stats .st-pending {
+    background-color: #c0392b;
+}
+.home-stats .st-items {
+    background-color: #d35400;
+}
+.home-stats .st-comments {
+    background-color: #8e44ad;
+}
+.latest {
+    margin-top: 30px;
+    
+}
+/*end dashboard*/
+h1 {
+    font-size: 55px;
+    margin: 40px 0;
+    font-weight: bold;
+    color: #666;
+}
+.show-pass {
+    position: absolute;
+    top: 6px;
+    right: -30px;
+}
+.main-table {
+    box-shadow: 0 3px 10px #ccc;
+}
+.main-table td{
+    background-color: #fff;
+    vertical-align: middle !important;
+}
+.main-table tr:first-child td{
+    background-color: #333;
+    color: #fff;
+}
+.main-table .btn {
+    padding: 3px 10px;
+}
+.activate {
+    margin-left: 5px;
+}
