@@ -16,7 +16,7 @@ if(isset($_SESSION['Username'])){
 
 
 <h1 class="text-center">manage categories</h1>
-<div class="container">
+<div class="container .categories">
     <div class="panel panel-default">
         <div class="panel-heading">
             manage categories
@@ -24,12 +24,17 @@ if(isset($_SESSION['Username'])){
         <div class="panel-body">
             <?php
             foreach($cats as $cat){
-                echo $cat['Name'] . '<br/>';
-                echo $cat['Description'] . '<br/>';
-                echo 'ordering is' . $cat['Ordering'] . '<br/>';
-                echo 'visibility is' . $cat['Visibility'] . '<br/>';
-                echo 'allow comment is' . $cat['Allow_Commenting'] . '<br/>';
-                echo 'allow ads is' . $cat['Allow_Ads'] . '<br/>';
+                echo "<div class='cat>'";
+                    echo "<h3>" . $cat['Name'] . "<h3>";
+                    echo "<p>"; 
+                    if($cat['Description'] == '')
+                    {echo 'thiscategory has no description';}else
+                    {echo $cat['Description'];}echo "</p>";
+                    if($cat['Visibility'] == 1){echo '<span class="visibility">hidden</span>';}
+                    if($cat['Allow_Commenting'] == 1){echo '<span class="commenting">comment disabled</span>';}    
+                    if($cat['Allow_Ads'] == 1){echo '<span class="ads">ads disabled</span>';}    
+                echo "</div";
+                echo "<hr>";
             }
             ?>
         </div>
