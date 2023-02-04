@@ -7,7 +7,16 @@ if(isset($_SESSION['Username'])){
 
     $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
     if($do == 'Manage') {
-        $stmt2 = $con->prepare("SELECT * FROM categories");
+
+        $sort = 'ASC';
+        $sort_array = array('ASC', 'DESC');
+
+        if(isset($_GET['sort']) && in_array($_GET['sort'], $sort_array)){
+
+            $sort = $_GET['sort'];
+        }
+
+        $stmt2 = $con->prepare("SELECT * FROM categories ORDER BY Ordering $sort");
 
         $stmt2->execute();
 
@@ -20,11 +29,20 @@ if(isset($_SESSION['Username'])){
     <div class="panel panel-default">
         <div class="panel-heading">
             manage categories
+            <div class="ordering pull-right">
+                ordering:
+                <a class="<?php if($sort == 'ASC') {echo 'active';}?>" href="?sort=ASC">ASC</a> /
+                <a class="<?php if($sort == 'DESC') {echo 'active';}?>" href="?sort=DESC">DESC</a>
+            </div>
         </div>
         <div class="panel-body">
             <?php
             foreach($cats as $cat){
                 echo "<div class='cat>'";
+                echo "<div class='hidden-buttons'>";
+                echo "<a href='categories.php?do=Edit&catid='" . $cat['ID'] . "' class='btn btn-xs btn-primary'><i class='fa fa-edit'></i>edit</a>";
+                echo "<a href='#' class='btn btn-xs btn-danger'><i class='fa fa-close'></i>delete</a>";
+                echo "<div>";
                     echo "<h3>" . $cat['Name'] . "<h3>";
                     echo "<p>"; 
                     if($cat['Description'] == '')
@@ -158,7 +176,30 @@ if(isset($_SESSION['Username'])){
             redirectHome($theMsg, 'back', 4);
         }
     }elseif ($do == 'Edit'){
-        
+        $userid =  isset($_GET['catid']) && is_numeric($_GET['catid']) ? intval($_GET['catid']) : 0;
+
+        $stmt = $con->prepare("SELECT * FROM categories WHERE ID = ?");
+
+        $stmt->execute(array($catid));
+
+        $cat = $stmt->fetch();
+
+        $count = $stmt->rowCount();
+
+
+        if ($stmt->rowCount() > 0) {
+
+
+        ?>
+
+
+<?php
+        } else {
+            echo "<div class='container'>";
+            $theMsg = '<div class="alert alert-danger">there is no such id</div>';
+            redirectHome($theMsg);
+        }
+        echo "</div>";
     }elseif ($do == 'Update'){
         
     }elseif ($do == 'Delete'){
