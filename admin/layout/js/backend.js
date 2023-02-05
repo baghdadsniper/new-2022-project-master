@@ -38,5 +38,17 @@ passField.attr('type', 'text');
     //confirmation message on button
     $('.confirm').click(function () {
         return confirm('are you sure ?');
-    })
+    });
+
+    //category view option
+    $(' .cat h3').click(function (){
+        $(this).next('.full-view').fadeToggle(200);
+    });
+    $('.option span').click(function (){
+        $(this).addClass('active').siblings('span').removeClass('active');
+
+        if($(this).data('view') === 'full'){
+            $('.cat .full-view').fadeout(200);
+        }
+    });
 });

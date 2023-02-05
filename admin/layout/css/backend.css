@@ -122,6 +122,14 @@ h1 {
 .categories .panel-body{
     padding: 0;
 }
+.categories .panel-heading{
+    color: #959595;
+    font-weight: bold;
+}
+.categories .panel-heading i{
+position: relative;
+top: 1px;
+}
 .categories .cat {
     padding: 0;
     position: relative;
@@ -141,27 +149,33 @@ right: 10px;
     top: 15px;
     right: -120px;
 }
-.categories .ordering a {
+.categories .option a {
     text-decoration: none;
     color: #888
 }
-.categories .ordering a {
-    text-decoration: none;
-    color: #888
-}
-.categories .ordering .active {
+.categories .option .active {
     color: #F00;
-    font-weight: bold;
+}
+.categories .option span {
+color: #888;
+cursor: pointer;
 }
 .categories .cat .hidden-buttons a{
     margin-right: 5px;
 }
 .categories .cat hr{
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 .categories .cat h3{
-    margin: 0 0 10px;
+    margin: 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: #6A6A6A;
+}
+.categories .cat .full-view p{
+    margin: 10px 0;
+    color: #707070;
 }
 .categories .cat:last-of-type ~ hr{
     display: none;
@@ -186,4 +200,8 @@ right: 10px;
     padding: 4px 6px;
     margin-right: 10px;
     border-radius: 6px;
+}
+.add-category {
+    margin-bottom: 30px;
+    margin-top: -10px;
 }

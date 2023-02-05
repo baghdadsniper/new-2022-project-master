@@ -13,17 +13,16 @@ function getTitle()
 
 //redirect function
 
-function redirectHome($theMsg, $url = null, $seconds = 3) {
-    if($url === null){
+function redirectHome($theMsg, $url = null, $seconds = 3)
+{
+    if ($url === null) {
         $url = 'index..php';
         $link = 'Homepage';
+    } else {
+        if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== '') {
 
-    }else{
-        if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== '') {
-            
             $url = $_SERVER['HTTP_REFERER'];
             $link = 'previous page';
-
         }
         $url = 'index.php';
     }
@@ -40,17 +39,19 @@ function redirectHome($theMsg, $url = null, $seconds = 3) {
 
 //function to check items in database
 
-function checkItem($select, $from, $value) {
+function checkItem($select, $from, $value)
+{
     global $con;
     $statement = $con->prepare("SELECT $select FROM $from WHERE $select = ?");
     $statement->execute(array($value));
     $count = $statement->rowCount();
-    return $count; 
+    return $count;
 }
 
 //count number of items
 
-function countItems($item, $table) {
+function countItems($item, $table)
+{
     global $con;
 
     $stmt2 = $con->prepare("SELECT COUNT($item) From $table");
@@ -58,12 +59,12 @@ function countItems($item, $table) {
     $stmt2->execute();
 
     return $stmt2->fetchColumn();
-
 }
 
-function getLatest($select, $table, $order, $limit = 5){
+function getLatest($select, $table, $order, $limit = 5)
+{
     global $con;
-    $getStmt = $con->prepare("SELECT $select FROM $table ORDER BY $order DESC $limit");
+    $getStmt = $con->prepare("SELECT $select FROM $table ORDER BY $order desc $limit");
     $getStmt->execute();
     $rows = $getStmt->fetchAll();
 
