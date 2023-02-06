@@ -216,7 +216,7 @@ if(isset($_SESSION['Username'])){
         $item = $stmt->fetch();
         $count = $stmt->rowCount();
 
-        if ($stmt->rowCount() > 0) {
+        if ($count > 0) {
             ?>
             <h1 class="text-center">
                 edit item
@@ -300,9 +300,65 @@ if(isset($_SESSION['Username'])){
                         </div>
                     </div>
                 </form>
+                <?php 
+                //select all comments except admin
+        $stmt = $con->prepare("SELECT 
+                                  comments.*, users.Username AS Member
+                                 FROM
+                                  comments
+                                   INNER JOIN
+                                   users
+                                   ON
+                                   users.UserID = comments.user_id
+                                   WHERE item_id = ?
+                                  ");
+        //excute statement
+        $stmt->execute(array($itemid));
+
+        //assign to vars
+        $rows = $stmt->fetchAll();
+
+if(! empty($rows)) {
+
+
+
+?>
+        <h1 class="text-center">
+            manage [<?php 
+                           echo $item['Name'] ?>] comments
+        </h1>
+            <div class="table-responsive">
+                <table class="main-table table table-bordered">
+                    <tr>
+                        <td>comment</td>
+                        <td>user name</td>
+                        <td>added date</td>
+                        <td>control</td>
+                    </tr>
+                    <?php
+                    foreach ($rows as $row) {
+                        echo "<tr>";
+                        echo "<td>" . $row['comment'] . "</td>";
+                        echo "<td>" . $row['Member'] . "</td>";
+                        echo "<td>" . $row['comment_date'] . "</td>";
+                        echo "<td>
+                           <a href='comments.php?do=Edit&comid=" . $row['c_id'] . "' class='btn btn-success'><i class='fa fa-edit'></i>edit</a>
+                           <a href='comments.php?do=Delete&comid=" . $row['c_id'] . "' class='btn btn-danger confirm'><i class='fa fa-close'></i>delete</a>";
+
+                        if ($row['status'] == 0) {
+                            echo  "<a href='comments.php?do=Approve&comid=" . $row['c_id'] . "' class='btn btn-info activate'><i class='fa fa-check'></i>approve</a>";
+                        }
+
+                        echo "/td>";
+                        echo "</td>";
+                    }
+                    ?>
+                </table>
+            </div>
+            <?php } ?>
             </div>
             <?php
-    
+
         } else {
             echo "<div class='container'>";
             $theMsg = '<div class="alert alert-danger">there is no such id</div>';

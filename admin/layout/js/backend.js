@@ -2,6 +2,18 @@ $(function() {
 
     'use strict';
 
+
+    //dashboard
+    $('.toggle-info').click(function () {
+$(this).toggleClass('selected').parent().next('.panel-body').fadeToggle(100);
+
+if($(this).hasClass('selected')) {
+    $(this).html('<i class="fa fa-minus fa-lg"></i>');
+}else {
+    $(this).html('<i class="fa fa-plus fa-lg"></i>');
+}
+    });
+
     //trigger the select box
     $("select").selectBoxIt({
         autoWidth: false
