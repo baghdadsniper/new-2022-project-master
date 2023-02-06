@@ -57,7 +57,7 @@ if (isset($_SESSION['Username']) && $_GET['page'] == 'Pending') {
                            <a href='members.php?do=Delete&userid=" . $row['UserID'] . "' class='btn btn-danger confirm'><i class='fa fa-close'></i>delete</a>";
                           
                           if ($row['RegStatus'] == 0){
-                          echo  "<a href='members.php?do=Activate&userid=" . $row['UserID'] . "' class='btn btn-info activate'><i class='fa fa-close'></i>activate</a>";
+                          echo  "<a href='members.php?do=Activate&userid=" . $row['UserID'] . "' class='btn btn-info activate'><i class='fa fa-check'></i>activate</a>";
                           }
                           
                            echo "/td>";
@@ -170,7 +170,7 @@ if (isset($_SESSION['Username']) && $_GET['page'] == 'Pending') {
                     echo "<div class='container'>";
                     $theMsg = "<div class='alert alert-success'>" . $stmt->rowCount() . ' Record inserted</div>';
 
-                    redirectHome($theMsg, 'back', 4);
+                    redirectHome($theMsg);
                     echo "</div>";
                 }
             }
