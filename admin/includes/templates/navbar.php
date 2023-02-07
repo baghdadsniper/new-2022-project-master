@@ -14,15 +14,14 @@
         <li><a href="categories.php"><?php echo lang('CATEGORIES') ?></a></li>
         <li><a href="items.php"><?php echo lang('ITEMS') ?></a></li>
         <li><a href="members.php"><?php echo lang('MEMBERS') ?></a></li>
-        <li><a href="#"><?php echo lang('STATISTICS') ?></a></li>
         <li><a href="#"><?php echo lang('COMMENTS') ?></a></li>
-        <li><a href="#"><?php echo lang('LOGS') ?></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">anas <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="members.php?do=Edit&userid=<?php echo $_SESSION['ID'] ?>">edit profile</a></li>
+          li><a href="members.php?do=Edit&userid=<?php echo $_SESSION['ID'] ?>">visit shop</a></li>
+            <li><a href="../index.php">edit profile</a></li>
             <li><a href="#">settings</a></li>
             <li><a href="logout.php">logout</a></li>
           </ul>
