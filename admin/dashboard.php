@@ -9,6 +9,7 @@ if (isset($_SESSION['Username'])) {
     $latestUsers = getLatest("*", "users", "UserID", $numUsers);
     $numItems = 6;
     $latestItems = getLatest("*", "items", "Item_ID", $numItems);
+    $numComments = 4;
 ?>
     <div class="home-stats">
         <div class="container text-center">
@@ -46,9 +47,8 @@ if (isset($_SESSION['Username'])) {
                     <div class="stat st-comments">
                     <i class="fa fa-comments"></i>
                         <div class="info">
-                            total items
                         total comments
-                        <span>200</span>
+                        <span><a href="comments.php"><?php echo countItems('c_id', 'comments') ?></a></span>
                         </div>
                     </div>
                 </div>
@@ -75,6 +75,7 @@ if (isset($_SESSION['Username'])) {
                         <ul class="list-unstyled latest-users">
                             <?php
                             $latestUsers = getLatest("*", "Users", "UserID", $numUsers);
+                            if(! empty($latestItems)) {
                             foreach ($latestUsers as $user) {
                                 echo $user['Username'];
                                 echo '<li>';
@@ -88,6 +89,11 @@ if (isset($_SESSION['Username'])) {
                                 echo '</a>';                     
                                 echo '</li>';                     
                                   }
+                            }else{
+                                echo 'theres no record to show';
+                            }
+                            
+                            
                             ?>
                             </ul>
                         </div>
@@ -103,7 +109,7 @@ if (isset($_SESSION['Username'])) {
                 <div class="col-sm-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-tag"></i>latest items
+                            <i class="fa fa-tag"></i>latest <?php echo $numItems ?> items
                             <span class="toggle-info pull-right">
                                 <i class="fa fa-plus fa-lg"></i>
                             </span>
@@ -112,6 +118,7 @@ if (isset($_SESSION['Username'])) {
                         <ul class="list-unstyled latest-users">
                             <?php
                             $latestItems = getLatest("*", "items", "Item_ID", $numItems);
+                            if(! empty($latestItems)) {
                             foreach ($latestItems as $item) {
                                 echo $Item['Name'];
                                 echo '<li>';
@@ -125,6 +132,9 @@ if (isset($_SESSION['Username'])) {
                                 echo '</a>';                     
                                 echo '</li>';                     
                                   }
+                                }else{
+                                    echo 'theres no record to show';
+                                }
                             ?>
                             </ul>
                         </div>
@@ -135,7 +145,7 @@ if (isset($_SESSION['Username'])) {
                 <div class="col-sm-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-tag"></i>latest comments
+                            <i class="fa fa-tag"></i>latest <?php echo $numComments ?> comments
                             <span class="toggle-info pull-right">
                                 <i class="fa fa-comments-o"></i>
                             </span>
@@ -150,12 +160,15 @@ if (isset($_SESSION['Username'])) {
                                      users
                                      ON
                                      users.UserID = comments.user_id
-                                    ");
+                                     ORDER BY
+                                     c_id DESC
+                                    LIMIT $numComments");
           //excute statement
           $stmt->execute();
   
           //assign to vars
           $comments = $stmt->fetchAll();
+          if(! empty($latestItems)) {
           foreach ($comments as $comment){
             echo'<div class="comment-box">';
             echo '<span class="member-n">' . $comment['Member'] . '</span>';
@@ -164,6 +177,9 @@ if (isset($_SESSION['Username'])) {
 
 
           }
+        }else{
+            echo 'theres no record to show';
+        }
                             ?>
 
 

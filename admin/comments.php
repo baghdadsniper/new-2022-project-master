@@ -28,12 +28,14 @@ if (isset($_SESSION['comment']) && $_GET['page'] == 'Pending') {
                                    users
                                    ON
                                    users.UserID = comments.user_id
+                                   ORDER BY
+                                   c_id DESC
                                   ");
         //excute statement
         $stmt->execute();
 
         //assign to vars
-        $rows = $stmt->fetchAll();
+        $comments = $stmt->fetchAll();
 
 
 
@@ -53,19 +55,19 @@ if (isset($_SESSION['comment']) && $_GET['page'] == 'Pending') {
                         <td>control</td>
                     </tr>
                     <?php
-                    foreach ($rows as $row) {
+                    foreach ($comments as $comment) {
                         echo "<tr>";
-                        echo "<td>" . $row['c_id'] . "</td>";
-                        echo "<td>" . $row['comment'] . "</td>";
-                        echo "<td>" . $row['Item_Name'] . "</td>";
-                        echo "<td>" . $row['Member'] . "</td>";
-                        echo "<td>" . $row['comment_date'] . "</td>";
+                        echo "<td>" . $comment['c_id'] . "</td>";
+                        echo "<td>" . $comment['comment'] . "</td>";
+                        echo "<td>" . $comment['Item_Name'] . "</td>";
+                        echo "<td>" . $comment['Member'] . "</td>";
+                        echo "<td>" . $comment['comment_date'] . "</td>";
                         echo "<td>
-                           <a href='comments.php?do=Edit&comid=" . $row['c_id'] . "' class='btn btn-success'><i class='fa fa-edit'></i>edit</a>
-                           <a href='comments.php?do=Delete&comid=" . $row['c_id'] . "' class='btn btn-danger confirm'><i class='fa fa-close'></i>delete</a>";
+                           <a href='comments.php?do=Edit&comid=" . $comment['c_id'] . "' class='btn btn-success'><i class='fa fa-edit'></i>edit</a>
+                           <a href='comments.php?do=Delete&comid=" . $comment['c_id'] . "' class='btn btn-danger confirm'><i class='fa fa-close'></i>delete</a>";
 
-                        if ($row['status'] == 0) {
-                            echo  "<a href='comments.php?do=Approve&comid=" . $row['c_id'] . "' class='btn btn-info activate'><i class='fa fa-check'></i>approve</a>";
+                        if ($comment['status'] == 0) {
+                            echo  "<a href='comments.php?do=Approve&comid=" . $comment['c_id'] . "' class='btn btn-info activate'><i class='fa fa-check'></i>approve</a>";
                         }
 
                         echo "/td>";
@@ -82,7 +84,7 @@ if (isset($_SESSION['comment']) && $_GET['page'] == 'Pending') {
 
         $stmt = $con->prepare("SELECT * FROM comments WHERE c_id = ?");
         $stmt->execute(array($comid));
-        $row = $stmt->fetch();
+        $comment = $stmt->fetch();
         $count = $stmt->rowCount();
 
         if ($stmt->rowCount() > 0) {
@@ -99,7 +101,7 @@ if (isset($_SESSION['comment']) && $_GET['page'] == 'Pending') {
                     <div class="form-group-lg">
                         <label for="" class="col-sm-2 control-label" required>comment</label>
                         <div class="col-sm-10 col-md-4 ">
-                            <textarea class="form-control" name="comment" id="" cols="30" rows="10"><?php echo $row['comment']; ?></textarea>
+                            <textarea class="form-control" name="comment" id="" cols="30" rows="10"><?php echo $comment['comment']; ?></textarea>
                         </div>
                     </div>
                     <div class="form-group-lg">

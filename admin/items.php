@@ -311,6 +311,8 @@ if(isset($_SESSION['Username'])){
                                    ON
                                    users.UserID = comments.user_id
                                    WHERE item_id = ?
+                                   ORDER BY
+                                   Item_ID DESC
                                   ");
         //excute statement
         $stmt->execute(array($itemid));

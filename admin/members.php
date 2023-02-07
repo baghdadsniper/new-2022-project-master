@@ -20,13 +20,14 @@ if (isset($_SESSION['Username']) && $_GET['page'] == 'Pending') {
             $query = 'AND RegStatus = 0';
         }
         //select all users except admin
-        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID != 1 $query");
+        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID != 1 $query ORDER BY
+        UserID DESC");
         //excute statement
         $stmt->execute();
 
         //assign to vars
         $rows = $stmt->fetchAll();
-
+if(! empty($rows)){
 
 
 ?>
@@ -70,7 +71,16 @@ if (isset($_SESSION['Username']) && $_GET['page'] == 'Pending') {
         </div>
 
 
-    <?php } elseif ($do == 'Add') { ?>
+    <?php }else{
+        echo '<a href="members.php?do=Add" class="btn btn-primary"><i class="fa fa-plus"></i> new member</a>
+        <div class="container">
+        <div class="alert alert-info">
+        there is nothin here
+        </div>
+        </div>';
+    }
+
+} elseif ($do == 'Add') { ?>
         <h1 class="text-center">
             add new Member
         </h1>
@@ -275,14 +285,36 @@ if (isset($_SESSION['Username']) && $_GET['page'] == 'Pending') {
             //check if there is no errors proceed the update operation
             if (empty($formErrors)) {
 
-                //update the database
 
-                $stmt = $con->prepare("UPDATE users SET Username = ?, Email = ?, FullName = ?,Password = ? WHERE UserID = ?");
+                $stmt2 = $con->prepare("SELECT 
+                            * 
+                            FROM 
+                                users 
+                            WHERE 
+                                Username = ? 
+                            AND 
+                                UserID = ?");
+
+                                $stmt2->execute(array($user, $id));
+                                $count = $stmt2->rowCount();
+
+                                if($count == 1){
+                                    echo '<div class="alert alert-danger">sorry this user is exist</div>';
+                                    echo 'update';
+                                    redirectHome($theMsg, 'back', 4);
+                                }else {
+
+                                    $stmt = $con->prepare("UPDATE users SET Username = ?, Email = ?, FullName = ?,Password = ? WHERE UserID != ?");
                 $stmt->execute(array($user, $email, $name, $pass, $id));
 
                 //echo success message
                 $theMsg = "<div class='alert alert-success'>" . $stmt->rowCount() . ' Record updated</div>';
-                redirectHome($theMsg, 'back', 4);
+                
+                                }
+                                        
+                //update the database
+
+                
             }
         } else {
             $theMsg = '<div class="alert alert-danger">sorry you cant browse this page directly</div>';
