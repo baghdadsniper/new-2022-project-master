@@ -16,6 +16,7 @@
             $cat = filter_var($_POST['category'], FILTER_SANITIZE_NUMBER_INT);
 
 
+        
             if (strlen($name) < 4) {
                 $formErrors[] = 'name cant be <strong>less than 4 characters</strong>';
             }
